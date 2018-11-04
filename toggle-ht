@@ -10,7 +10,7 @@
 readonly CPUS=(/sys/devices/system/cpu/cpu[0-9]*)
 
 # toggle-ht version number
-readonly VERSION=0.2.0
+readonly VERSION=0.2.1
 
 # end constants }}}
 # ==============================================================================
@@ -85,7 +85,7 @@ off() {
       INFO "CPU$_cpuid "
       echo '1' > "$_cpu/online"
       if [[ "$_cpuid" == "$_thread1" ]]; then
-        echo "-> enable"
+        echo '-> enable'
         echo '1' > "$_cpu/online"
       else
         echo '-> disable'
@@ -101,7 +101,7 @@ on() {
     _cpuid="$(basename "$_cpu" | cut -b4-)"
     if [[ -e "$_cpu/online" ]]; then
       INFO "CPU$_cpuid "
-      echo "-> enable"
+      echo '-> enable'
       echo '1' > "$_cpu/online"
     fi
   done
