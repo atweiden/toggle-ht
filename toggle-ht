@@ -71,12 +71,16 @@ set -- "${_POSITIONAL[@]}"
 # end usage }}}
 # ==============================================================================
 
+INFO() {
+  echo -n "toggle-ht#info: $*"
+}
+
 off() {
   local _cpuid
   local _thread1
   for _cpu in ${CPUS[@]}; do
     _cpuid="$(basename "$_cpu" | cut -b4-)"
-    echo -en "CPU: $_cpuid "
+    INFO "CPU$_cpuid "
     [[ -e "$_cpu/online" ]] \
       && echo '1' > "$_cpu/online"
     _thread1="$(cut -f1 -d, <<< "$_cpu/topology/thread_siblings_list")"
