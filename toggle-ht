@@ -10,7 +10,7 @@
 readonly CPUS=(/sys/devices/system/cpu/cpu[0-9]*)
 
 # toggle-ht version number
-readonly VERSION=0.0.1
+readonly VERSION=0.1.0
 
 # end constants }}}
 # ==============================================================================
@@ -81,16 +81,16 @@ off() {
   for _cpu in ${CPUS[@]}; do
     _cpuid="$(basename "$_cpu" | cut -b4-)"
     INFO "CPU$_cpuid "
-    [[ -e "$_cpu/online" ]] \
-      && echo '1' > "$_cpu/online"
     _thread1="$(cut -f1 -d, <<< "$_cpu/topology/thread_siblings_list")"
-    if [[ "$_cpuid" == "$_thread1" ]]; then
-      echo "-> enable"
-      [[ -e "$_cpu/online" ]] \
-        && echo '1' > "$_cpu/online"
-    else
-      echo '-> disable'
-      echo '0' > "$_cpu/online"
+    if [[ -e "$_cpu/online" ]]; then
+      echo '1' > "$_cpu/online"
+      if [[ "$_cpuid" == "$_thread1" ]]; then
+        echo "-> enable"
+        echo '1' > "$_cpu/online"
+      else
+        echo '-> disable'
+        echo '0' > "$_cpu/online"
+      fi
     fi
   done
 }
