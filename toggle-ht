@@ -96,7 +96,14 @@ off() {
 }
 
 on() {
-  echo NYI
+  local _cpuid
+  for _cpu in ${CPUS[@]}; do
+    _cpuid="$(basename "$_cpu" | cut -b4-)"
+    INFO "CPU$_cpuid "
+    echo "-> enable"
+    [[ -e "$_cpu/online" ]] \
+      && echo '1' > "$_cpu/online"
+  done
 }
 
 main() {
