@@ -22,11 +22,11 @@ Usage:
   toggle-ht [-h|--help] <off|on>
 
 Options:
-  -h, --help       Show this help text
+  -h, --help  Show this help text
 
 Commands:
-  off              Disable hyperthreading
-  on               Enable hyperthreading
+  off         Disable hyperthreading
+  on          Enable hyperthreading
 EOF
 echo "$_usage_string"
 }
