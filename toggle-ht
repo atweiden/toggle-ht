@@ -7,6 +7,8 @@
 # ==============================================================================
 # constants {{{
 
+readonly CPUS=(/sys/devices/system/cpu/cpu[0-9]*)
+
 # toggle-ht version number
 readonly VERSION=0.0.1
 
@@ -72,9 +74,9 @@ set -- "${_POSITIONAL[@]}"
 off() {
   local _cpuid
   local _thread1
-  for _cpu in /sys/devices/system/cpu/cpu[0-9]*; do
+  for _cpu in ${CPUS[@]}; do
     _cpuid="$(basename "$_cpu" | cut -b4-)"
-    echo -en "_cpu: $_cpuid "
+    echo -en "CPU: $_cpuid "
     [[ -e "$_cpu/online" ]] \
       && echo '1' > "$_cpu/online"
     _thread1="$(cut -f1 -d, <<< "$_cpu/topology/thread_siblings_list")"
