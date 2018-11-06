@@ -10,7 +10,7 @@
 readonly CPUS=(/sys/devices/system/cpu/cpu[0-9]*)
 
 # toggle-ht version number
-readonly VERSION=0.5.0
+readonly VERSION=0.5.1
 
 # end constants }}}
 # ==============================================================================
@@ -78,6 +78,7 @@ INFO() {
 off() {
   local _cpuid
   local _thread1
+  INFO 'Disabling hyperthreading'
   for _cpu in ${CPUS[@]}; do
     _cpuid="$(basename "$_cpu" | cut -b4-)"
     INFO "CPU$_cpuid "
@@ -99,6 +100,7 @@ off() {
 
 on() {
   local _cpuid
+  INFO 'Enabling hyperthreading'
   for _cpu in ${CPUS[@]}; do
     _cpuid="$(basename "$_cpu" | cut -b4-)"
     INFO "CPU$_cpuid "
